@@ -1,0 +1,572 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{flushend}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage[numbers]{natbib}
+\usepackage{tabularray}
+\usepackage{tikz}
+\usepackage{subfig}
+\usepackage{listings}
+\usepackage{todonotes}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\tikzstyle{block} = [rectangle, draw, 
+    text width=5em, text centered, rounded corners, minimum height=2em]
+\tikzstyle{oval} = [ellipse, draw, 
+    text width=5em, text centered, rounded corners, minimum height=2em]
+\tikzstyle{bt} = [rectangle, draw, 
+    text width=1em, text centered, rounded corners, minimum height=2em]
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes.geometric}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}
+
+\lstset{
+  frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  captionpos=b,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  numberblanklines=false,
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  escapeinside=??
+}
+
+\begin{document}
+
+\title{Indispensable Mocks}
+
+\author{\IEEEauthorblockN{Mohammad Mahdi Abdollahpour}
+\IEEEauthorblockA{\textit{Cheriton School of Computer Science} \\
+\textit{University of Waterloo}\\
+Waterloo, Canada\\
+mohammadmahdi.abdollahpour@uwaterloo.ca}
+}
+
+\maketitle
+
+\begin{abstract}
+More than two decades ago, Mock Object was introduced as an extension to Test-Driven Development with the primary objective of addressing the challenges faced by developers when isolating the system under test during unit testing. The idea of using mock objects has been widely adopted and numerous frameworks and libraries have been developed based on this concept for various programming languages. However, there is limited academic research on this topic. This paper aims to encourage practitioners to increase their focus on this technique by introducing seven predicates that require the use of a mocking framework. We substantiate our predicates by providing explanatory justifications and practical examples. Additionally, we conduct an empirical analysis on 30 Java projects and identify mock usages that are not easily discernible based on our predicates. Finally, we offer our interpretation of the findings to assist and inspire future researchers to continue this work.
+\end{abstract}
+
+\begin{IEEEkeywords}
+mock objects, unit tests, program analysis, static analysis, empirical studies
+\end{IEEEkeywords}
+
+\section{Introduction}
+Extreme Programming (XP) \cite{beck2000extreme} advocates for unit testing as one of its fundamental practices toward Test-Driven Development (TDD). It distinguishes ``unit tests'' from ``functional tests'' via the differences in perspectives: programmer vs. customer. \cite{endotesting} introduces the concept of ``mock objects'' as a technique for tackling parts of the challenges in the practical implementation of unit testing. \cite{mockarentstubs} gives a concise definition of mock objects (based on \cite{meszaros2007xunit}): ``objects pre-programmed with expectations which form a specification of the calls they are expected to receive''. There is a close semantic relation between mocks and another form of test double called ``stubs'' which was first introduced by \cite{binder99testingoo}. The main difference between them lies in the way they verify the expectations: stubs verify states while mocks verify behavior \cite{mockarentstubs}. \cite{meszaros2007xunit} uses an umbrella term for all forms of replacements for real objects: Test Doubles. 
+
+Aside from terminology, there are benefits and drawbacks to using mocks. 
+\cite{endotesting} makes a case for using mocks based on the following benefits:
+\begin{itemize}
+    \item Deferring infrastructure choices such as database implementation
+    \item Setting up complex system state in a localized manner
+    \item Coping with test conditions that are difficult to reproduce
+    \item Shorter feedback loop due to faster and localized failures
+    \item Better understanding of the system through unexpected mock failures
+    \item Reducing the need to expose the structure of domain code
+    \item Encouraging object passing over singletons which decreases the number of unexpected side-effects
+    \item Encouraging smaller and more specialized classes
+    \item Interface discovery
+\end{itemize}
+
+Years later, in \cite{mockroles}, the same authors introduce Need-Driven Development based on the most important benefit of using mocks: interface discovery. \cite{mockroles} considers testing as a design activity and states that TDD with mock objects allows developers to design an object by its requirements rather than what it provides. 
+
+Originally, using mock objects was introduced as a technique; however, many tools and libraries have been developed to ease the process of implementing it. The most notable libraries for Java include JMock \cite{mockroles}, EasyMock \cite{easymock}, and Mockito \cite{mockito}. These libraries provide generalized APIs to create mock objects by implementing a domain-specific embedded language within Java. 
+
+% In spite of the benefits mentioned earlier, using mock objects has faced strong opposition among practitioners. For example, Fowler shows his concern about the consequences of coupling tests to implementation in \cite{mockarentstubs}. Martin advocates against using mocking tools due to the overhead of learning and using a new domain-specific language \cite{whentomock}.
+
+% In this research, we focus on the necessity of using mock objects. More specifically, we try to answer the following research questions:
+% \begin{itemize}
+%     \item RQ1: When is it necessary to use mock objects? In other words, when is it practically infeasible to use alternative forms of test doubles?
+%     \item RQ2: How many of the mock instances used in Java projects could be considered indispensable? 
+% \end{itemize}
+
+Despite the aforementioned benefits, the use of mock objects has been met with significant opposition among practitioners. For instance, Fowler has expressed concern about coupling tests to implementation in \cite{mockarentstubs}, while Martin advocates against using mocking tools due to the learning curve and the use of a new domain-specific language \cite{whentomock}.
+
+In this research, our focus is on the necessity of using mock objects. Specifically, we aim to answer the following research questions:
+
+\begin{itemize}
+    \item RQ1: Under what circumstances is it necessary to use mock objects, i.e., when are the alternative forms of test doubles impractical?
+    \item RQ2: To what extent is the utilization of mocking considered necessary in Java projects?
+\end{itemize}
+
+We posit that there are situations where not using mocking tools is highly impractical. To this end, we provide detailed explanations and concrete examples of real-world scenarios that necessitate using mock objects.
+
+The contributions of this study are as follows:
+
+\begin{itemize}
+    \item A list of rules and examples that outline when using mock objects is necessary
+    \item An empirical analysis of mock usage in several open-source Java projects
+\end{itemize}
+
+\section{Related Work}
+
+% martin fowler defines unit tests... (you're focusing on one element of the software at a time -hence the common term unit testing. The problem is that to make a single unit work, you often need other units - hence the need for some kind of warehouse in our example)
+
+% There has always been debate over terminology in many fields of software engineering and software testing is not an exception in that regard. \cite{meszaros2007xunit} provides a cross reference sheet on TDD terminology. A group of practitioners define unit test in a different way than XP practitioners. They specifically define unit testing in contrast with integration testing. Their main focus is on the scope rather than perspective. Fowler \cite{mockarentstubs} writes ``... you're focusing on one element of the software at a time -hence the common term unit testing.''. 
+
+% Rainsberger \cite{intgtestscam} strongly discourages the use of integration tests, not as a term but as a technique. He believes that they are a gateway to an entangled and error-prone design. He suggests a tree-like architecture in which every interaction between layers of dependency is verified by four types of tests, two of which need mock objects to implement. 
+
+% The usage of mock objects have not been without controversies either. Langer \cite{langr2004don}, Fowler \cite{mockarentstubs}, and Beck \cite{istdddead} argue against using mock objects unless they are absolutely necessary. This school of thought is referred to as  ``Classisist'' or ``Chicago'' (vs. ``Mockist'' or ``London''). ``Tautological tests'' \cite{tautotest} and ``drifting test doubles'' \cite{whotestcontract} are among the most prominent issues classicists cite to argue against mocking. 
+
+In the field of software engineering and software testing, there has been an ongoing debate regarding the use of terminology. As documented by \cite{meszaros2007xunit}, there exist differences in how different groups of practitioners define terms such as ``unit testing'' and ``integration testing''. For instance, some define unit testing in contrast to integration testing, focusing on scope rather than perspective. Fowler \cite{mockarentstubs} writes, ``... you are focusing on one element of the software at a time -hence the common term unit testing.''. 
+
+Rainsberger \cite{intgtestscam} has expressed a strong stance against the use of integration tests, advocating instead for a tree-like architecture where every interaction between layers of dependency is verified by four types of tests, two of which require mock objects. 
+
+The use of mock objects has also generated controversy, with authors such as Langer \cite{langr2004don}, Fowler \cite{mockarentstubs}, and Beck \cite{istdddead} arguing against their use except when absolutely necessary. This viewpoint is known as ``Classicist'' or ``Chicago'' (as opposed to ``Mockist'' or ``London''). The classicist position cites issues such as ``tautological tests'' \cite{tautotest} and ``drifting test doubles'' \cite{whotestcontract} to argue against the use of mocks.
+
+Several research studies have been conducted in the area of mock objects, exploring different aspects of their design, implementation, and usage. For instance, \citeauthor{mockobjmodels} \cite{mockobjmodels} proposed a formalization of existing mock object models and proposed a new one. Additionally, Saff and Ernst \cite{mockobjectfortestrefactor} introduced the concept of test factoring with mock objects, while Tillmann and Schulte \cite{mockobjgen} developed a .NET-based tool for generating mock objects and their corresponding behavior through symbolic execution. Similarly, \citeauthor{genutest2} \cite{genutest2} created a Java-based tool that automatically generates unit tests and mock aspects for isolation testing. In another work, \citeauthor{extractmockbehavior} \cite{extractmockbehavior} presented an approach to derive mock object behavior from Design by Contract\textsuperscript{TM} specifications. Furthermore, \cite{interfaceoodmock} proposes a technique for generating mock classes and test cases for interface-coded objects. Lastly, \citeauthor{moda} \cite{moda} leverages dynamic symbolic execution to generate tests for a database application using mock objects.
+
+\section{Defining Indispensable Mocks}
+The utilization of mock objects presents the possibility of producing advantageous~\cite{endotesting}\cite{mockobjects} outcomes, as well as potentially damaging ones~\cite{langr2004don}. Through an examination of relevant literature and a manual investigation of open-source projects written in Java, we have arrived at the conclusion that certain circumstances encountered during unit testing require the use of mock objects. In this section, we concentrate on outlining the conditions in which eschewing mocks is impractical. To this end, we provide a list of structural and semantic predicates, accompanied by their corresponding justifications and real-world usage examples. If any predicate evaluates to true on a type \textit{T}, which is mocked, we classify \textit{T} as indispensable.
+
+\subsection{P0: Computational expense}
+\textbf{Predicate. } \textit{T} is a class or abstract class or interface that has a method (or a public constructor) \textit{M} which needs to be invoked in a unit test while it is computationally expensive to execute any ``meaningful'' implementation of \textit{M}.
+
+\textbf{Justification. }
+The concept of fast-running tests has been emphasized in several sources, including \cite{cleancode}\cite{meszaros2007xunit}\cite{beck2003test}. A key reason for the widespread utilization of mock objects is their ability to address the practical reality that employing a real implementation can require an excessive amount of time to execute. While in certain scenarios, it may be feasible to use fake data or simplified alternatives, these solutions may not adequately address the need to verify the behavior of the system in most cases (i.e., limited to state verification). 
+
+\textbf{Example. }
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+    HttpClient mockHttpClient = mock(HttpClient.class);
+    HttpResponse<String> mockResponse = mock(HttpResponse.class);
+    when(mockHttpClient.send(
+            HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build(),
+            HttpResponse.BodyHandlers.ofString()))
+        .thenReturn(mockResponse);
+    when(mockResponse.statusCode()).thenReturn(200);
+    when(mockResponse.body()).thenReturn("{\"temperature\": 20, \"humidity\": 80}");
+    WeatherService weatherService = new WeatherService(mockHttpClient);
+    Weather weather = weatherService.getWeatherByCity("Waterloo");
+    assertEquals(20, weather.getTemperature());
+    assertEquals(80, weather.getHumidity());
+\end{lstlisting}
+
+In this instance, Mockito \cite{mockito} is employed to generate mock objects for the \texttt{HttpClient} and \texttt{HttpResponse} classes. The mock objects are configured to imitate the behavior of a real web service but produce fake data when queried.
+
+Utilizing mock objects in this manner enables us to test our \texttt{WeatherService} class without making actual calls to the external web service, which can prove to be both time-consuming and costly.
+
+\subsection{P1: Final class}
+\textbf{Predicate. }
+\textit{T} is a final class with a method \textit{M} which needs to be invoked in a unit test.
+
+\textbf{Justification. }
+Sub-classing of final classes is not allowed in Java (which is the point of using final class in the first place), thus it is not possible to verify the behavior of an object that calls a method of an object of a final class during the test time. If the developer attempts to create a stub for a final class, they will fail to inherit from the final class in order to add the test behavior to it. 
+
+\textbf{Example. }
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+    @Mock
+    private PaymentGateway paymentGateway;
+    private PaymentService paymentService;
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        paymentService = new PaymentService(paymentGateway);
+    }
+    @Test
+    public void testProcessPayment() {
+        when(paymentGateway.processPayment(anyDouble(), anyString())).thenReturn(true);
+        boolean result = paymentService.processPayment(100.0, "123456789");
+        verify(paymentGateway).processPayment(100.0, "123456789");
+        assertTrue(result);
+    }
+\end{lstlisting}
+
+It would not be possible to write the test for \texttt{PaymentService} class that depends on a final \texttt{PaymentGateway} class without using a mocking framework. This is because a final class cannot be extended or sub-classed. This limitation makes it impossible to create a test double of the final \texttt{PaymentGateway} class.
+
+Without using a mocking framework, we would have to use the real \texttt{PaymentGateway} class in our tests. This would make our tests more complex and less reliable, as they would depend on external factors such as network connectivity, database availability, or API stability. In addition, testing with the real \texttt{PaymentGateway} class could have financial consequences, especially if the payment processing is not done in test mode.
+
+By using a mocking framework like Mockito, we can create a mock object of the final \texttt{PaymentGateway} class and simulate its behavior in our tests. This allows us to isolate the behavior of the \texttt{PaymentService} class and test it in a controlled environment without relying on external factors.
+
+\subsection{P2: Final method}
+\textbf{Predicate. }
+\textit{T} is a class or abstract class with a final method \textit{M} which needs to be invoked in a unit test. 
+
+\textbf{Justification. }
+This issue is similar to the problem of final classes but in a smaller scope. There is no easy way for a developer to override a final method with a custom behavior specifically designed for unit testing. 
+
+\textbf{Example. }
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  public class PaymentProcessor {
+    // ...
+    public final boolean processPayment(
+        String paymentDetails) { ... }
+  }
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  @Test
+  public void testProcessOrder() {
+    PaymentProcessor mockPaymentProcessor = mock(PaymentProcessor.class);
+    when(mockPaymentProcessor.processPayment(anyString()))
+      .thenReturn(true);
+    OrderProcessor orderProcessor = new OrderProcessor(mockPaymentProcessor);
+    boolean result = orderProcessor.processOrder("paymentDetails");
+    assertTrue(result);
+    verify(mockPaymentProcessor, times(1)).processPayment("paymentDetails");
+  }
+\end{lstlisting}
+
+In the absence of a mocking framework, testing the class that relies on the final method would prove to be challenging since we are unable to modify the behavior of the final method during testing. As a result, we would need to execute the final method in the test environment, which could potentially be time-consuming, undependable, and may impede the stability of the system.
+
+It is worth noting that stubbing final methods and final classes is a difficult endeavor in Java and is not available in several mocking frameworks.
+
+
+\subsection{P3: Surfeit of methods}
+\textbf{Predicate. }
+\textit{T} is an interface that defines at least \textit{N} methods. (\textit{N} is a number greater than 1 and is chosen by the designer of the system.)
+
+\textbf{Justification. }
+The creation of a custom class that implements a specific interface may appear to be a straightforward task. Nevertheless, if the number of methods within the interface exceeds a certain threshold, it becomes burdensome (both in terms of development and maintenance) to write an implementation for each individual method of the interface.
+
+\textbf{Example. }
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  interface PaymentGateway {
+    void authenticate(String apiKey);
+    boolean authorize(String ccNumber, double amount);
+    void capture(String transactionId, double amount);
+    void refund(String transactionId, double amount);
+    void voidTransaction(String transactionId);
+    String getTransactionStatus(String transactionId);
+    void setShippingAddress(String address);
+    void setBillingAddress(String address);
+    void setCustomerName(String name);
+  }
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  @Test
+  public void testPaymentService() {
+    when(paymentGateway.authorize(anyString(), anyDouble())).thenReturn(true);
+    doNothing().when(paymentGateway).capture(anyString(), anyDouble());
+    doNothing().when(paymentGateway).refund(anyString(), anyDouble());
+    doNothing().when(paymentGateway)
+      .voidTransaction(anyString());
+    when(paymentGateway.getTransactionStatus(anyString()))
+      .thenReturn("success");
+    boolean result = 
+      paymentService.processPayment("12345", 100.00);
+    assertTrue(result);
+    verify(paymentGateway, times(1)).authorize(anyString(), anyDouble());
+    verify(paymentGateway, times(1)).capture(anyString(), anyDouble());
+    verify(paymentGateway, never()).refund(anyString(), anyDouble());
+    verify(paymentGateway, never()).voidTransaction(anyString());
+    verify(paymentGateway, times(1)).getTransactionStatus(anyString());
+  }
+\end{lstlisting}
+
+It can be challenging to implement a comprehensive test for an interface with a lot of methods (\texttt{PaymentGateway} in our example) without using a mocking framework. Without a mocking framework, we would need to create a complete implementation of the interface, which can be time-consuming and difficult to maintain. We would also need to ensure that the implementation provides consistent and predictable behavior for all methods in all possible scenarios.
+
+Furthermore, if the implementation of the interface is complex, it may be difficult to set up the required dependencies and test environment for a thorough test. This can be especially true for testing scenarios that involve multiple objects interacting with each other.
+
+\subsection{P4: No public constructor}
+\textbf{Predicate. }
+\textit{T} is a class or abstract class without any public constructor. 
+
+\textbf{Justification. }
+The instantiation of a class with no public constructor is not a trivial task. In some cases, factory classes are employed to exert greater control over the instantiation process. However, during testing, creating the entire setup solely to instantiate a single object may not be considered a feasible option.
+
+\textbf{Example. }
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  public class PaymentGatewayFactory {
+      private static PaymentGatewayFactory instance = new PaymentGatewayFactory();
+      private PaymentGatewayFactory() {
+          // private ctor...
+      }
+      public static PaymentGatewayFactory getInstance() {
+          return instance;
+      }
+      public PaymentGateway createPaymentGateway() {
+          PaymentGateway paymentGateway = new PaymentGateway();
+          // set up the PaymentGateway object...
+          return paymentGateway;
+      }
+  }
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  @Test
+  public void testProcessPayment() {
+      PaymentGateway mockPaymentGateway = Mockito.mock(PaymentGateway.class);
+      PaymentProcessor paymentProcessor = new PaymentProcessor(mockPaymentGateway);
+      when(mockPaymentGateway.processPayment(
+        any(PaymentRequest.class)))
+          .thenReturn(new PaymentResponse("success"));
+      PaymentRequest paymentRequest = new PaymentRequest("123", 100.0);
+      PaymentResponse paymentResponse = paymentProcessor.processPayment(paymentRequest);
+      verify(mockPaymentGateway)
+        .processPayment(paymentRequest);
+      assertEquals(paymentResponse.getStatus(), "success");
+  }
+\end{lstlisting}
+
+In this example, the \texttt{PaymentProcessor} class is responsible for processing payments in a banking application. The \texttt{PaymentProcessor} class relies on the \texttt{PaymentGateway} class, which facilitates communication with a third-party payment service. The \texttt{PaymentGateway} class has a private constructor and is instantiated via a factory class called \texttt{PaymentGatewayFactory}. To test the \texttt{PaymentProcessor} class, a mock \texttt{PaymentGateway} object can be employed in place of an actual one.
+
+Testing the \texttt{PaymentProcessor} class without the use of mocks would necessitate writing code to configure the factory class and ensuring that all of its dependencies and context are correctly established. A real implementation of \texttt{createPaymentGateway} would potentially entail expensive operations that must be executed in every test. Moreover, adding test behavior to the \texttt{PaymentGateway} class would not be possible because sub-classing it would also be infeasible due to the absence of a non-private constructor. Under these circumstances, verifying the behavior of the \texttt{PaymentProcessor} would be a challenging task.
+
+
+\subsection{P5: Complex public constructor}
+\textbf{Predicate. }
+\textit{T} is a class or abstract class and all of its public constructors are complex. A public constructor is complex if it accepts more than \textit{N} arguments or accepts at least one non-nullable argument; type of which matches at least one of the predicates. (\textit{N} is a number greater than 1 and is chosen by the designer of the system.)
+
+\textbf{Justification. }
+In Java, classes are usually instantiated through their public constructors. Nevertheless, when the only viable option is to utilize a public constructor that requires a significant number of arguments, each of which could potentially necessitate separate instantiation along with their own setup and dependencies, it becomes exceedingly difficult to write a stub for such a class.
+
+\textbf{Example. }
+Imagine we have a \texttt{PaymentService} class with the following constructor.
+
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  public PaymentService(PaymentGateway paymentGateway, AccountRepository accountRepository, FraudDetectionService fraudDetectionService, NotificationService  notificationService, Logger logger, UserService userService, CurrencyConversionService  currencyConversionService) 
+  {
+      this.paymentGateway = paymentGateway;
+      this.accountRepository = accountRepository;
+      this.fraudDetectionService = fraudDetectionService;
+      this.notificationService = notificationService;
+      this.logger = logger;
+      this.userService = userService;
+      this.currencyConversionService = currencyConversionService;
+  }
+\end{lstlisting}
+Then we can have a test like:
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  @Mock
+  private PaymentService paymentServiceMock;
+  @Test
+  public void shouldProcessPaymentSuccessfully() {
+      PaymentProcessor paymentProcessor = new PaymentProcessor(paymentServiceMock);
+      Payment payment = new Payment("John Smith", "1234-5678-9012-3456", 100.00);
+      when(paymentServiceMock.processPayment(payment))
+        .thenReturn(true);
+      boolean result = paymentProcessor.processPayment(payment);
+      verify(paymentServiceMock, times(1)).processPayment(payment);
+      assertTrue(result);
+  }
+\end{lstlisting}
+
+In the absence of mock frameworks, it becomes necessary to manually create and instantiate all the dependencies of the \texttt{PaymentService} class. This can be an arduous and error-prone process, particularly when dealing with dependencies that are complex and have their own dependencies. Additionally, creating and managing all the dependencies in a testing environment can make the tests more complicated and harder to read and maintain.
+
+\subsection{P6: Complex method}
+\textbf{Predicate. }
+\textit{T} is a class or abstract class or interface with a complex method \textit{M} that needs to be invoked in a unit test. A method is complex if its return type matches at least one of the predicates.
+
+\textbf{Justification. }
+When attempting to include test behavior in a method, a developer may endeavor to create a customized, simplified version of the method for a stubbed class. However, when the instantiation of the return value poses technical difficulties, it becomes challenging to develop and maintain a straightforward stub implementation for the purpose of unit testing.
+
+\textbf{Example. }
+\begin{lstlisting}[basicstyle=\ttfamily,
+numbers=left,numbersep=0pt,basicstyle=\scriptsize\ttfamily,language = Java, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, escapechar=|, morekeywords={@Test}]
+  @Test
+  public void testProcessPayment() {
+      PaymentService paymentService = mock(PaymentService.class);
+      User user = mock(User.class);
+      PaymentDetails paymentDetails = mock(PaymentDetails.class);
+      Account account = mock(Account.class);
+      BillingAddress billingAddress = mock(BillingAddress.class);
+      CreditCard creditCard = mock(CreditCard.class);
+      PayPalAccount payPalAccount = mock(PayPalAccount.class);
+      Invoice invoice = mock(Invoice.class);
+      PromotionCode promotionCode = mock(PromotionCode.class);
+      
+      PaymentProcessor paymentProcessor = new PaymentProcessor(paymentService);
+      
+      paymentProcessor.processPayment(user, paymentDetails, account, billingAddress, creditCard, payPalAccount, invoice, promotionCode);
+      
+      verify(paymentService).processPayment(same(user), same(paymentDetails), same(account), same(billingAddress), same(creditCard), same(payPalAccount), same(invoice),  same(promotionCode));
+  }
+\end{lstlisting}
+
+Manually creating all the dependencies in the code would lead to verbosity and decreased readability. It would also require a considerable amount of setup code, making the test difficult to maintain. Additionally, this approach could result in slow and brittle tests that might break if any of the dependencies change, making it hard to isolate and test the \texttt{PaymentProcessor} class.
+
+\section{Finding Indispensable Mocks}
+To answer the second research question, we conduct an analysis to find matches for our predicates. For the scope of this study we focus on implementing predicates \textit{P1} to \textit{P4} along with a simplified version of predicate \textit{P5}. More specifically, we limit the implementation of predicate \textit{P5} to the argument counts, thus we do not recursively run over the predicates.
+
+\textbf{Approach.}
+First, we implement a tool using a declarative approach on top of Doop~\cite{doop}. We define Datalog rules to find mock objects (based on the syntax of Mockito~\cite{mockito} library). We also add rules to find method invocations on the mock objects. Our rules allow us to track mockness through fields, collections, and arrays. We provide a selected subset of the Datalog rules.
+\begin{lstlisting}[basicstyle=\ttfamily\small,numbers=none,label={lst:core},caption={Selected rules for Datalog mock analysis},
+basicstyle=\scriptsize\ttfamily, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, label=lis:datalog-rule, escapechar=!]
+// v = mock()
+isMockVar(v) :-
+  AssignReturnValue(mi, v),
+  callsMockSource(mi).
+// v = (type) from
+isMockVar(v) :- isMockVar(from),
+  AssignCast(_/* type */, from, v, _/* inmethod */).
+// v = v1
+isMockVar(v) :- isMockVar(v1),
+  AssignLocal(v1, v, _).
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\small,numbers=none,caption={Two rules give interprocedural analysis in Doop.},
+basicstyle=\scriptsize\ttfamily, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, label=lis:interproc-rule, escapechar=!]
+// v = callee(), where callee's return var is mock
+isInterprocMockVar(v) :-
+  AssignReturnValue(mi, v),
+  mainAnalysis.CallGraphEdge(_, mi, _, callee),
+  ReturnVar(v_callee, callee),
+  isMockVar(v_callee).
+
+// callee(v) results in formal
+//   param of callee being mock
+isInterprocMockVar(v_callee) :- isMockVar(v),
+  ActualParam(n, mi, v),
+  FormalParam(n, callee, v_callee),
+  mainAnalysis.CallGraphEdge(_, mi, _, callee),
+  Method_DeclaringType(callee, callee_class),
+  ApplicationClass(callee_class).
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\small,numbers=none,caption={Rules for handling arrays.},
+basicstyle=\scriptsize\ttfamily, framesep=4.5mm, framexleftmargin=1.0mm, captionpos=b, label=lis:array-rule, escapechar=!]
+// v = c[idx]
+isMockVar(v) :-
+  isArrayLocalThatContainsMocks(c),
+  LoadArrayIndex(c, v, _ /* idx */).
+
+// c[idx] = mv
+isArrayLocalThatContainsMocks(c) :-
+  StoreArrayIndex(mv, c, _ /* idx */),
+  isMockVar(mv).
+\end{lstlisting}
+
+After finding mock objects, we post-process the generated Doop results to answer our research question. The post-processing is done in two steps. First, we directly parse and analyze selected Doop fact and result files to collect the following information about all mock objects: 
+\begin{itemize}
+    \item The types of the mocked variables
+    \item Exact location of the mock object (surrounding class and method name)
+    \item The list of all final method invocations of each of the mocked types
+    \item Class modifiers (public, private, final, ...)
+    \item The count of methods in each of the mocked types
+    \item List of public constructors' signatures for each of the mocked types 
+\end{itemize}
+
+In the next step, we implement and run each of the predicates over all the data collected from the previous step. We use \textit{N} = 5 in our implementation of the predicates \textit{P3} and \textit{P5}.
+
+\textbf{Result.}
+The results are shown in table \ref{t1}.
+
+\begin{table}[h]
+\centering
+\caption{Total number of mocked types in the benchmark projects along with the number of mocked types matching each of the predicates}
+\begin{tblr}{
+  width = \linewidth,
+  colspec = {Q[490]Q[200]Q[48]Q[48]Q[48]Q[48]Q[48]},
+  column{even} = {r},
+  column{3} = {r},
+  column{5} = {r},
+  column{7} = {r},
+  hlines,
+  vline{2-7} = {-}{},
+  hline{1,34} = {-}{0.08em},
+}
+\textbf{Benchmark} & \textbf{\# Mocked Types} & \textbf{P1} & \textbf{P2} & \textbf{P3} & \textbf{P4} & \textbf{P5}\\
+vraptor-parent & 84 & 0 & 0 & 14 & 0 & 0\\
+lettuce-core & 43 & 0 & 1 & 14 & 3 & 1\\
+datasource-proxy & 42 & 0 & 1 & 12 & 1 & 2\\
+openshift-restclient-java & 38 & 0 & 0 & 16 & 2 & 0\\
+mybatis-3-mybatis & 24 & 0 & 0 & 13 & 4 & 0\\
+jsonschema2pojo & 22 & 1 & 0 & 3 & 11 & 0\\
+maven-assembly-plugin & 18 & 0 & 0 & 8 & 0 & 1\\
+bootique & 15 & 0 & 0 & 2 & 3 & 0\\
+thumbnailator & 14 & 0 & 0 & 0 & 2 & 2\\
+zip4j & 11 & 0 & 0 & 3 & 2 & 0\\
+palatable\_lambda & 11 & 0 & 0 & 1 & 7 & 0\\
+perwendel\_spark & 10 & 0 & 0 & 4 & 2 & 0\\
+% maven & 7 & 0 & 0 & 2 & 0 & 1\\
+flink & 7 & 0 & 0 & 1 & 0 & 0\\
+java-faker & 7 & 0 & 0 & 0 & 2 & 0\\
+braintree\_java & 6 & 0 & 0 & 0 & 0 & 0\\
+maven-dependency-plugin & 6 & 0 & 0 & 3 & 1 & 1\\
+minimal-json & 6 & 0 & 0 & 0 & 3 & 0\\
+quartz & 5 & 0 & 0 & 4 & 0 & 0\\
+% microbenchmark & 5 & 0 & 0 & 1 & 0 & 0\\
+offheap-store & 3 & 0 & 0 & 0 & 0 & 0\\
+JSON-java & 3 & 0 & 0 & 1 & 0 & 0\\
+mbassador & 3 & 0 & 0 & 0 & 0 & 0\\
+exec-maven-plugin & 3 & 0 & 0 & 1 & 0 & 1\\
+signpost & 3 & 0 & 0 & 2 & 0 & 0\\
+javapoet & 3 & 0 & 0 & 2 & 0 & 0\\
+commons-collections & 3 & 0 & 0 & 1 & 0 & 0\\
+azure-functions-java-worker & 3 & 3 & 0 & 0 & 3 & 0\\
+plexus-resources & 2 & 0 & 0 & 1 & 0 & 0\\
+java-gitlab-api & 2 & 0 & 0 & 0 & 1 & 0\\
+RxRelay & 2 & 0 & 0 & 0 & 0 & 0\\
+jdeb & 2 & 0 & 0 & 0 & 0 & 0
+\end{tblr}
+\label{t1}
+\end{table}
+
+
+\textbf{Analysis.}
+The observation is made that the practice of mocking final classes and final methods is exceedingly uncommon. There exist two possible explanations for this phenomenon. Firstly, the employment of final classes and methods may not be widespread in Java (though further research is needed to verify this claim). Secondly, the inability to mock final methods and final classes was pervasive in most mocking frameworks for an extended period. The tendency to abstain from mocking final classes or the lack of awareness concerning newer versions of mocking frameworks may have contributed to this occurrence.
+
+On the contrary, we can observe that mocking interfaces with an excessive number of methods is highly prevalent among developers. We believe that the chief reasons for this are to evade code clutter and to tackle the challenge of maintenance. Additionally, we see that mocking classes with no public constructors is comparatively frequent. Factory and builder patterns are extensively employed in Java, and they typically wrap around a class with private constructors. In our view, the widespread use of these two patterns and the inability to subclass classes with only private constructors are among the reasons that have given rise to this practice.
+
+Finally, we note that developers do not commonly utilize mock objects for public constructors with an excessive number of arguments. This may be attributed to the fact that such classes are not commonly encountered due to the general consensus among Java developers that having an excessive number of arguments in a public constructor (or any method) is not advisable, as per the principle outlined in \cite{cleancode}.
+
+% \section{Discussion}
+
+% final method should be final.. but actually not for testing!
+
+\section{Threats to Validity}
+
+\textbf{Construct Validity.}
+While we acknowledge that the predicates proposed in this paper are not exhaustive, we contend that compiling a complete inventory of rules that account for every conceivable scenario involving the use of mock objects is unfeasible. Nevertheless, we have undertaken a manual analysis of over 30 Java projects, along with their corresponding usage of mocking frameworks, to identify trends, patterns, and plausible justifications for incorporating the mocking technique. 
+
+\textbf{Internal Validity.}
+Based on the data presented in table \ref{t1}, we introduced a few plausible rationales for the patterns we have observed. We concede that most of these conjectures are not fully backed by formal research. Nevertheless, we do not purport that these arguments are established empirical truths, but rather represent our interpretations derived from the systematic examination of the benchmark projects and our general familiarity with the Java community. Furthermore, we believe that several of the inferences we have made could potentially serve as the focus of future research endeavors
+
+\textbf{External Validity.} 
+Our study is limited to Java benchmarks, and thus, the proposed predicates and the obtained results may not be generalizable to other programming languages. We recognize this as a potential shortcoming of our investigation, and therefore, we endeavor to address this concern by broadening our research scope to include other languages, such as C\# (a statically typed language analogous to Java) and Python (a prevalent dynamically typed language) in future research.
+
+\section{Conclusions}
+In this work, we propose a set of seven predicates for identifying necessary mock objects. For each predicate, we offer detailed justifications and examples to effectively communicate our intentions. We perform an analysis using five of these predicates on a Java codebase with the help of Doop analysis. We present potential explanations for our empirical results, which can be further studied by the research community. Our future work includes extending our analysis to other programming languages and paradigms to investigate potential variations in mock usage patterns among different practitioner groups.
+
+% \newpage
+
+\bibliographystyle{IEEEtranN}
+% \bibliography{references}
+\bibliography{ref}
+
+\end{document}

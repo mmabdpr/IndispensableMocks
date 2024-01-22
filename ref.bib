@@ -1,0 +1,516 @@
+@book{beck2000extreme, 
+year = {1999}, 
+title = {{Extreme programming explained: embrace change}}, 
+author = {Beck, Kent}, 
+publisher = {addison-wesley professional}, 
+keywords = {}
+}
+@book{binder99testingoo, 
+year = {1999}, 
+title = {{Testing object-oriented systems: models, patterns, and tools}}, 
+author = {Binder, Robert}, 
+publisher = {Addison-Wesley Professional}, 
+keywords = {}
+}
+@article{endotesting, 
+year = {2000}, 
+title = {{Endo-Testing: Unit Testing with Mock Objects}}, 
+author = {Mackinnon, Tim and Freeman, Steve and Craig, Philip}, 
+journal = {Extreme programming examined}, 
+pages = {287--301}, 
+keywords = {}
+}
+@article{mockobjects, 
+year = {2002}, 
+rating = {5}, 
+title = {{Mock objects}}, 
+author = {Thomas, D. and Hunt, A.}, 
+journal = {IEEE Software}, 
+issn = {0740-7459}, 
+doi = {10.1109/ms.2002.1003449}, 
+abstract = {{One thing that makes unit-testing code so hard is the way the real world keeps intruding. If all we had to do was code up tests for methods that sort arrays or generate Fibonacci series, life would be easy. In the real world we have to test code that uses databases, communications devices, user interfaces, and external applications. We might have to interface to devices that are not yet available or simulate network errors that are impossible to generate locally. This all conspires to stop our unit tests from being neat, self-contained (and orthogonal) chunks of code. Fortunately there is a testing pattern that can help. The authors consider the use of mock objects. With mock objects you can test code in splendid isolation, simulating all those messy real-world things that would otherwise make automated testing impossible. As with many other testing practices, the discipline of using mock objects can improve your code's structure.}}, 
+pages = {22--24}, 
+number = {3}, 
+volume = {19}, 
+keywords = {}
+}
+@inproceedings{brown2003mock, 
+year = {2003}, 
+author = {Brown, M and Tapolcsanyi, Eli}, 
+title = {{Mock object patterns}}, 
+booktitle = {The 10th Conference on Pattern Languages of Programs, Monticello, USA}, 
+keywords = {}
+}
+@book{beck2003test, 
+year = {2003}, 
+title = {{Test-driven development: by example}}, 
+author = {Beck, Kent}, 
+publisher = {Addison-Wesley Professional}, 
+keywords = {}
+}
+@inproceedings{langr2004don, 
+year = {2004}, 
+author = {Langr, Jeff}, 
+title = {{Don’t mock me: Design considerations for mock objects}}, 
+booktitle = {Agile Development Conference}, 
+volume = {2004}, 
+keywords = {}
+}
+@article{jmock, 
+year = {2004}, 
+title = {{jMock: supporting responsibility-based design with mock objects}}, 
+author = {Freeman, Steve and Mackinnon, Tim and Pryce, Nat and Walnes, Joe}, 
+journal = {Companion to the 19th annual ACM SIGPLAN conference on Object-oriented programming systems, languages, and applications}, 
+doi = {10.1145/1028664.1028667}, 
+abstract = {{In this demonstration we will show the flow of the Mock Object development process by pair-programming to develop a code example. During the session, we will introduce the declarative jMock API and show how we use it to describe relationships between objects when developing test-first. We will show how this approach helps developers concentrate on real requirements and how it encourages a design in which objects are focused with well-defined responsibilities. We will also show our practices for maintaining the readability of tests written using jUnit with jMock. This work is described in a Practitioner Report at this conference, "Mock Roles, Not Objects".}}, 
+pages = {4--5}, 
+keywords = {}
+}
+@book{rainsberger2004junit, 
+year = {2004}, 
+title = {{JUnit recipes: practical methods for programmer testing}}, 
+author = {Rainsberger, Joe B and Stirling, Scott}, 
+publisher = {Manning Publications Co.}, 
+keywords = {}
+}
+@article{mockobjectfortestrefactor, 
+year = {2004}, 
+title = {{Mock object creation for test factoring}}, 
+author = {Saff, David and Ernst, Michael D}, 
+journal = {Proceedings of the 5th ACM SIGPLAN-SIGSOFT workshop on Program analysis for software tools and engineering}, 
+doi = {10.1145/996821.996838}, 
+abstract = {{Test factoring creates fast, focused unit tests from slow system-wide tests; each new unit test exercises only a subset of the functionality exercised by the system tests. Augmenting a test suite with factored unit tests, and prioritizing the tests, should catch errors earlier in a test run.One way to factor a test is to introduce mock objects. If a test exercises a component A, which is designed to issue queries against or mutate another component B, the implementation of B can be replaced by a mock. The mock has two purposes: it checks that A's calls to B are as expected, and it simulates B's behavior in response. Given a system test for A and B, and a record of A's and B's behavior when the system test is run, we would like to automatically generate unit tests for A in which B is mocked. The factored tests can isolate bugs in A from bugs in B and, if B is slow or expensive, improve test performance or cost.This paper motivates test factoring with an illustrative example, proposes a simple procedure for automatically generating mock objects for factored tests, and gives examples of how the procedure can be extended to produce more robust factored tests.}}, 
+pages = {49--51}, 
+keywords = {}
+}
+@article{mockroles, 
+year = {2004}, 
+rating = {5}, 
+title = {{Mock roles, not objects}}, 
+author = {Freeman, Steve and Mackinnon, Tim and Pryce, Nat and Walnes, Joe}, 
+journal = {Companion to the 19th annual ACM SIGPLAN conference on Object-oriented programming systems, languages, and applications}, 
+doi = {10.1145/1028664.1028765}, 
+abstract = {{Mock Objects is an extension to Test-Driven Development that supports good Object-Oriented design by guiding the discovery of a coherent system of types within a code base. It turns out to be less interesting as a technique for isolating tests from third-party libraries than is widely thought. This paper describes the process of using Mock Objects with an extended example and reports best and worst practices gained from experience of applying the process. It also introduces jMock, a Java framework that embodies our collective experience.}}, 
+pages = {236--246}, 
+keywords = {}
+}
+@article{mockobjfwfortdd, 
+year = {2005}, 
+title = {{Mock Objects Framework for TDD in the Network Environment}}, 
+author = {Ryu, Ho-Yeon and Sohn, Byeong-Kil and Park, Jae-Heung}, 
+journal = {Fourth Annual ACIS International Conference on Computer and Information Science (ICIS'05)}, 
+doi = {10.1109/icis.2005.88}, 
+abstract = {{TDD is a software development approach which is based on test. TDD let us get improved code and refined design through lasting test with refactoring process. However, if network or database environment and other object were not developed, TDD could have a problem to make progress. If you will use the Mock Objects in this situation, TDD will be processed more effectively. To make Mock Objects needs a lot of cost and effort for network and database. Therefore this paper presents a Mock Objects frameworks for TDD which can save time and make safe Mock Objects.}}, 
+pages = {430--434}, 
+keywords = {}
+}
+@article{toolsupportforexecdoc, 
+year = {2005}, 
+title = {{Tool support for executable documentation of Java class hierarchies}}, 
+author = {Hoffman, Daniel and Strooper, Paul and Wilkin, Sarah}, 
+journal = {Software Testing, Verification and Reliability}, 
+issn = {0960-0833}, 
+doi = {10.1002/stvr.324}, 
+abstract = {{While object‐oriented programming offers great solutions for today's software developers, this success has created difficult problems in class documentation and testing. In Java, two tools provide assistance: Javadoc allows class interface documentation to be embedded as code comments and JUnit supports unit testing by providing assert constructs and a test framework. This paper describes JUnitDoc, an integration of Javadoc and JUnit, which provides better support for class documentation and testing. With JUnitDoc, test cases are embedded in Javadoc comments and used as both examples for documentation and test cases for quality assurance. JUnitDoc extracts the test cases for use in HTML files serving as class documentation and in JUnit drivers for class testing. To address the difficult problem of testing inheritance hierarchies, JUnitDoc provides a novel solution in the form of a parallel test hierarchy. A small controlled experiment compares the readability of JUnitDoc documentation to formal documentation written in Object‐Z. Copyright © 2005 John Wiley \& Sons, Ltd.}}, 
+pages = {235--256}, 
+number = {4}, 
+volume = {15}, 
+keywords = {}
+}
+@article{mockobjmodels, 
+year = {2006}, 
+title = {{Mock Object Models for Test Driven Development}}, 
+author = {Kim, Taeksu and Park, Chanjin and Wu, Chisu}, 
+journal = {Fourth International Conference on Software Engineering Research, Management and Applications (SERA'06)}, 
+doi = {10.1109/sera.2006.49}, 
+abstract = {{Test driven development uses unit tests for driving the design of the code. Mock object is an object that imitates the behavior of an object with which class under test has an association to assist the unit testing. Although many tools for mock object are used in practice, there has been few research on defining the mock object model. For the comparisons of the testing capability of the tools, it is important to define the models. In this paper we represent the models of the existing mock object tools and indicate the limitations of them. In addition we propose a new model to overcome the limitations of the existing tools. With this model, more general behavior of the class under test related to the mock object can be expressed and tested.}}, 
+pages = {221--228}, 
+keywords = {}
+}
+@article{mockobjgen, 
+year = {2006}, 
+title = {{Mock-object generation with behavior}}, 
+author = {Tillmann, Nikolai and Schulte, Wolfram}, 
+journal = {21st IEEE/ACM International Conference on Automated Software Engineering (ASE'06)}, 
+doi = {10.1109/ase.2006.51}, 
+abstract = {{Unit testing is a popular way to guide software development and testing. Each unit test should target a single feature, but in practice it is difficult to test features in isolation. Mock objects are a well-known technique to substitute parts of a program which are irrelevant for a particular unit test. Today mock objects are usually written manually supported by tools that generate method stubs or distill behavior from existing programs. We have developed a prototype tool based on symbolic execution of. NET code that generates mock objects including their behavior by analyzing all uses of the mock object in a given unit test. It is not required that an actual implementation of the mocked behavior exists. We are working towards an integration of our tool into Visual Studio Team System.}}, 
+pages = {365--368}, 
+keywords = {}
+}
+@misc{mockarentstubs, 
+year = {2007}, 
+title = {{Mocks Aren't Stubs}}, 
+author = {Fowler, Martin}, 
+url = {https://martinfowler.com/articles/mocksArentStubs.html}, 
+urldate = {2023-04-23}, 
+keywords = {}
+}
+@book{meszaros2007xunit, 
+year = {2007}, 
+title = {{xUnit test patterns: Refactoring test code}}, 
+author = {Meszaros, Gerard}, 
+publisher = {Pearson Education}, 
+keywords = {}
+}
+@article{genutest1, 
+year = {2008}, 
+title = {{GenUTest: A Unit Test and Mock Aspect Generation Tool}}, 
+author = {Pasternak, Bennyand Tyszberowicz}, 
+abstract = {{Unit testing plays a major role in the software development process. It enables the immediate detection of bugs introduced into a unit whenever code changes occur. Hence, unit tests provide a safety net of regression tests and validation tests which encourage developers to refactor existing code. Nevertheless, not all software systems contain unit tests. When changes to such software are needed, writing unit tests from scratch might not be cost effective.}}, 
+editor = {["Yorav and Karen"]}, 
+pages = {252--266}, 
+keywords = {}
+}
+@article{testfilesystem, 
+year = {2009}, 
+title = {{An Empirical Study of Testing File-System-Dependent Software with Mock Objects}}, 
+author = {Marri, Madhuri R. and Xie, Tao and Tillmann, Nikolai and Halleux, Jonathan de and Schulte, Wolfram}, 
+journal = {2009 ICSE Workshop on Automation of Software Test}, 
+doi = {10.1109/iwast.2009.5069054}, 
+abstract = {{Unit testing is a technique of testing a single unit of a program in isolation. The testability of the unit under test can be reduced when the unit interacts with its environment. The construction of high-covering unit tests and their execution require appropriate interactions with the environment such as a file system or database. To help set up the required environment, developers can use mock objects to simulate the behavior of the environment. In this paper, we present an empirical study to analyze the use of mock objects to test file-system-dependent software. We use a mock object of the FileSystem API provided with the Pex automatic testing tool in our study. We share our insights gained on the benefits of using mock objects in unit testing and discuss the faced challenges.}}, 
+pages = {149--153}, 
+keywords = {}
+}
+@book{cleancode, 
+year = {2009}, 
+title = {{Clean code: a handbook of agile software craftsmanship}}, 
+author = {Martin, Robert C}, 
+publisher = {Pearson Education}, 
+keywords = {}
+}
+@article{genutest2, 
+year = {2009}, 
+title = {{GenUTest: a unit test and mock aspect generation tool}}, 
+author = {Pasternak, Benny and Tyszberowicz, Shmuel and Yehudai, Amiram}, 
+journal = {International Journal on Software Tools for Technology Transfer}, 
+issn = {1433-2779}, 
+doi = {10.1007/s10009-009-0115-4}, 
+abstract = {{Unit testing plays a major role in the software development process. What started as an ad hoc approach is becoming a common practice among developers. It enables the immediate detection of bugs introduced into a unit whenever code changes occur. Hence, unit tests provide a safety net of regression tests and validation tests which encourage developers to refactor existing code with greater confidence. One of the major corner stones of the agile development approach is unit testing. Agile methods require all software classes to have unit tests that can be executed by an automated unit-testing framework. However, not all software systems have unit tests. When changes to such software are needed, writing unit tests from scratch, which is hard and tedious, might not be cost effective. In this paper we propose a technique which automatically generates unit tests for software that does not have such tests. We have implemented GenUTest, a prototype tool which captures and logs interobject interactions occurring during the execution of Java programs, using the aspect-oriented language AspectJ. These interactions are used to generate JUnit tests. They also serve in generating mock aspects—mock object-like entities, which enable testing units in isolation. The generated JUnit tests and mock aspects are independent of the tool, and can be used by developers to perform unit tests on the software. Comprehensiveness of the unit tests depends on the software execution. We applied GenUTest to several open source projects such as NanoXML and JODE. We present the results, explain the limitations of the tool, and point out direction to future work to improve the code coverage provided by GenUTest and its scalability.}}, 
+pages = {273}, 
+number = {4}, 
+volume = {11}, 
+keywords = {}
+}
+@misc{intgtestscam, 
+year = {2009}, 
+title = {{Integrated Tests Are A Scam}}, 
+author = {Rainsberger, Joe B}, 
+url = {https://blog.thecodewhisperer.com/permalink/integrated-tests-are-a-scam}, 
+urldate = {2023-04-23}, 
+keywords = {}
+}
+@article{interfaceoodmock, 
+year = {2009}, 
+title = {{Interface-Based Object-Oriented Design with Mock Objects}}, 
+author = {Nandigam, Jagadeesh and Gudivada, Venkat N and Hamou-Lhadj, Abdelwahab and Tao, Yonglei}, 
+journal = {2009 Sixth International Conference on Information Technology: New Generations}, 
+doi = {10.1109/itng.2009.268}, 
+abstract = {{Interfaces are fundamental in object-oriented systems. One of the principles of reusable object-oriented design, according to Gamma et al., is program to an interface, not an implementation. Interface-based systems display three key characteristics - flexibility, extensibility, and pluggability. Designing with interfaces is therefore a better way of building object-oriented systems. Getting students in introductory software engineering and design courses to program to interfaces and develop interface-based systems is a challenge. This paper presents our experiences with the use of mock objects to promote interface-based design and effective unit testing in software engineering and design courses.}}, 
+pages = {713--718}, 
+keywords = {}
+}
+@article{extractmockbehavior, 
+year = {2010}, 
+title = {{Automatically extracting mock object behavior from Design by Contract™ specification for test data generation}}, 
+author = {Galler, Stefan J and Maller, Andreas and Wotawa, Franz}, 
+journal = {Proceedings of the 5th Workshop on Automation of Software Test}, 
+doi = {10.1145/1808266.1808273}, 
+abstract = {{Test data generation is an important task in the process of automated unit test generation. Random and heuristic approaches are well known for test input data generation. Unfortunately, in the presence of complex pre-conditions especially in the case of non-primitive data types those approaches often fail. A promising technique for generating an object that exactly satisfies a given pre-condition is mocking, i.e., replacing the concrete implementation with an implementation only considering the necessary behavior for a specific test case. In this paper we follow this technique and present an approach for automatically deriving the behavior of mock objects from given Design by Contract™ specifications. The generated mock objects behave according to the Design by Contract™ specification of the original class. Furthermore, we make sure that the observed behavior of the mock object satisfies the pre-condition of the method under test. We evaluate the approach using the Java implementations of 20 common Design Patterns and a stack based calculator. Our approach clearly outperforms pure random data generation in terms of line coverage.}}, 
+pages = {43--50}, 
+keywords = {}
+}
+@article{automock, 
+year = {2010}, 
+title = {{AUTOMOCK: Automated Synthesis of a Mock Environment for Test Case Generation}}, 
+author = {Alshahwan, Nadia and Jia, Yue and Lakhotia, Kiran and Fraser, Gordon and Shuler, David and Tonella, Paolo}, 
+issn = {1862-4405}, 
+doi = {10.4230/dagsemproc.10111.3}, 
+url = {https://drops.dagstuhl.de/opus/volltexte/2010/2618}, 
+editor = {\{Xie"], ["Mark Harman and Henry Muccini and Wolfram Schulte and Tao\}}, 
+pages = {1--4}, 
+volume = {10111}, 
+series = {Dagstuhl Seminar Proceedings (DagSemProc)}, 
+keywords = {}
+}
+@article{dscmock, 
+year = {2010}, 
+title = {{Dsc+Mock: a test case + mock class generator in support of coding against interfaces}}, 
+author = {Cook, Jonathan and Jones, James A and Islam, Mainul and Csallner, Christoph}, 
+journal = {Proceedings of the Eighth International Workshop on Dynamic Analysis}, 
+doi = {10.1145/1868321.1868326}, 
+abstract = {{Coding against interfaces is a powerful technique in object-oriented programming. It decouples code and enables independent development. However, code decoupled via interfaces poses additional challenges for testing and dynamic execution, as not all pieces of code that are necessary to execute a piece of code may be available. For example, a client class may be coded against several interfaces. For testing, however, no classes may be available that implement the interfaces. This means that, to support testing, we need to generate mock classes along with test cases. Current test case generators do not fully support this kind of independent development and testing. In this paper, we describe a novel technique for generating test cases and mock classes for object-oriented programs that are coded against interfaces. We report on our initial experience with an implementation of our technique for Java. Our prototype implementation achieved higher code coverage than related tools that do not generate mock classes, such as Pex.}}, 
+pages = {26--31}, 
+keywords = {}
+}
+@book{freeman2009growing, 
+year = {2010}, 
+title = {{Growing object-oriented software, guided by tests}}, 
+author = {Freeman, Steve and Pryce, Nat}, 
+publisher = {Pearson Education}, 
+keywords = {}
+}
+@misc{jmockvsmockito, 
+year = {2010}, 
+title = {{JMock v. Mockito, but not to the death}}, 
+author = {Rainsberger, Joe B}, 
+url = {https://blog.thecodewhisperer.com/permalink/jmock-v-mockito-but-not-to-the-death}, 
+urldate = {2023-04-23}, 
+note = {jmock for new features mockito for learning about legacy systems}, 
+keywords = {}
+}
+@article{moda, 
+year = {2010}, 
+title = {{MODA: automated test generation for database applications via mock objects}}, 
+author = {Taneja, Kunal and Zhang, Yi and Xie, Tao}, 
+journal = {Proceedings of the IEEE/ACM international conference on Automated software engineering}, 
+doi = {10.1145/1858996.1859053}, 
+abstract = {{Software testing has been commonly used in assuring the quality of database applications. It is often prohibitively expensive to manually write quality tests for complex database applications. Automated test generation techniques, such as Dynamic Symbolic Execution (DSE), have been proposed to reduce human efforts in testing database applications. However, such techniques have two major limitations: (1) they assume that the database that the application under test interacts with is accessible, which may not always be true; and (2) they usually cannot create necessary database states as a part of the generated tests. To address the preceding limitations, we propose an approach that applies DSE to generate tests for a database application. Instead of using the actual database that the application interacts with, our approach produces and uses a mock database in test generation. A mock database mimics the behavior of an actual database by performing identical database operations on itself. We conducted two empirical evaluations on both a medical device and an open source software system to demonstrate that our approach can generate, without producing false warnings, tests with higher code coverage than conventional DSE-based techniques.}}, 
+pages = {289--292}, 
+keywords = {}
+}
+@article{declmock, 
+year = {2013}, 
+title = {{Declarative mocking}}, 
+author = {Samimi, Hesam and Hicks, Rebecca and Fogel, Ari and Millstein, Todd}, 
+journal = {Proceedings of the 2013 International Symposium on Software Testing and Analysis}, 
+doi = {10.1145/2483760.2483790}, 
+abstract = {{Test-driven methodologies encourage testing early and often. "Mock objects" support this approach by allowing a component to be tested before all depended-upon components are available. Today mock objects typically reflect little to none of an object's intended functionality, which makes it difficult and error-prone for developers to test rich properties of their code. This paper presents "declarative mocking", which enables the creation of expressive and reliable mock objects with relatively little effort. In our approach, developers write method specifications in a high-level logical language for the API being mocked, and a constraint solver dynamically executes these specifications when the methods are invoked. In addition to mocking functionality, this approach seamlessly allows data and other aspects of the environment to be easily mocked. We have implemented the approach as an extension to an existing tool for executable specifications in Java called PBnJ. We have performed an exploratory study of declarative mocking on several existing Java applications, in order to understand the power of the approach and to categorize its potential benefits and limitations. We also performed an experiment to port the unit tests of several open-source applications from a widely used mocking library to PBnJ. We found that more than half of these unit tests can be enhanced, in terms of the strength of properties and coverage, by exploiting executable specifications, with relatively little additional developer effort.}}, 
+pages = {246--256}, 
+keywords = {}
+}
+@article{mockusageframeworks, 
+year = {2014}, 
+title = {{An empirical study on the usage of mocking frameworks in software testing}}, 
+author = {Mostafa, Shaikh and Wang, Xiaoyin}, 
+journal = {2014 14th International Conference on Quality Software}, 
+doi = {10.1109/qsic.2014.19}, 
+abstract = {{In software testing, especially unit testing, it is very common that software testers need to test a class or a component without integration with some of its dependencies. Typical reasons for excluding dependencies in testing include the unavailability of some dependency due to concurrent software development and callbacks in frameworks, high cost of invoking some dependencies (e.g., slow network or database operations, commercial third-party web services), and the potential interference of bugs in the dependencies. In practice, mock objects have been used in software testing to simulate such missing dependencies, and a number of popular mocking frameworks (e.g., Mockito, Easy-Mock) have been developed for software testers to generate mock objects more conveniently. However, despite the wide usage of mocking frameworks in software practice, there have been very few academic studies to observe and understand the usage status of mocking frameworks, and the major issues software testers are facing when using such mocking frameworks. In this paper, we report on an empirical study on the usage of four most popular mock frameworks (Mockito, EasyMock, JMock, and JMockit) in 5,000 open source software projects from GitHub. The results of our study show that the above mentioned mocking frameworks are used in a large portion (about 23\%) of software projects that have test code. We also find that software testers typically create mocks for only part of the software dependencies, and there are more mocking of source code classes than library classes.}}, 
+pages = {127--132}, 
+keywords = {}
+}
+@article{gentestcasesforinterfaces, 
+year = {2014}, 
+title = {{Generating Test Cases for Programs that Are Coded against Interfaces and Annotations}}, 
+author = {Islam, Mainul and Csallner, Christoph}, 
+journal = {ACM Transactions on Software Engineering and Methodology (TOSEM)}, 
+issn = {1049-331X}, 
+doi = {10.1145/2544135}, 
+abstract = {{Automatic test case generation for software programs is very powerful but suffers from a key limitation. That is, most current test case generation techniques fail to cover testee code when covering that code requires additional pieces of code not yet part of the program under test. To address some of these cases, the Pex state-of-the-art test case generator can generate basic mock code. However, current test case generators cannot handle cases in which the code under test uses multiple interfaces, annotations, or reflection. To cover such code in an object-oriented setting, we describe a novel technique for generating test cases and mock classes. The technique consists of collecting constraints on interfaces, annotations, and reflection, combining them with program constraints collected during dynamic symbolic execution, encoding them in a constraint system, solving them with an off-the-shelf constraint solver, and mapping constraint solutions to test cases and custom mock classes. We demonstrate the value of this technique on open-source applications. Our approach covered such third-party code with generated mock classes, while competing approaches failed to cover the code and sometimes produced unintended side-effects such as filling the screen with dialog boxes and writing into the file system.}}, 
+pages = {1--38}, 
+number = {3}, 
+volume = {23}, 
+keywords = {}
+}
+@misc{istdddead, 
+year = {2014}, 
+title = {{Is TDD Dead?}}, 
+author = {Beck, Kent and Fowler, Martin and Hansson, David Heinemeier}, 
+url = {https://martinfowler.com/articles/is-tdd-dead/}, 
+urldate = {2023-04-24}, 
+keywords = {}
+}
+@article{ontomock, 
+year = {2014}, 
+title = {{Ontologies + Mock Objects = Runnable Knowledge}}, 
+author = {Exman, Iaakov and Litovka, Anton and Yagel, Reuven}, 
+journal = {Proceedings of the 5th International Workshop on Software Knowledge}, 
+doi = {10.5220/0005178500710078}, 
+pages = {71--78}, 
+keywords = {}
+}
+@misc{whentomock, 
+year = {2014}, 
+title = {{When to Mock}}, 
+author = {Martin, Robert C.}, 
+url = {https://blog.cleancoder.com/uncle-bob/2014/05/10/WhenToMock.html}, 
+urldate = {2023-04-23}, 
+keywords = {}
+}
+@article{idfocalmethod, 
+year = {2015}, 
+title = {{Automatically Identifying Focal Methods Under Test in Unit Test Cases}}, 
+author = {Ghafari, Mohammad and Ghezzi, Carlo and Rubinov, Konstantin}, 
+journal = {2015 IEEE 15th International Working Conference on Source Code Analysis and Manipulation (SCAM)}, 
+doi = {10.1109/scam.2015.7335402}, 
+abstract = {{Modern iterative and incremental software development relies on continuous testing. The knowledge of test-to-code traceability links facilitates test-driven development and improves software evolution. Previous research identified traceability links between test cases and classes under test. Though this information is helpful, a finer granularity technique can provide more useful information beyond the knowledge of the class under test. In this paper, we focus on Java classes that instantiate stateful objects and propose an automated technique for precise detection of the focal methods under test in unit test cases. Focal methods represent the core of a test scenario inside a unit test case. Their main purpose is to affect an object's state that is then checked by other inspector methods whose purpose is ancillary and needs to be identified as such. Distinguishing focal from other (non-focal) methods is hard to accomplish manually. We propose an approach to detect focal methods under test automatically. An experimental assessment with real-world software shows that our approach identifies focal methods under test in more than 85 \% of cases, providing a ground for precise automatic recovery of test-to-code traceability links.}}, 
+pages = {61--70}, 
+keywords = {}
+}
+@misc{tddgooddesign, 
+year = {2015}, 
+title = {{Does TDD really lead to good design?}}, 
+author = {Mancuso, Sandro}, 
+url = {https://www.codurance.com/publications/2015/05/12/does-tdd-lead-to-good-design}, 
+urldate = {2023-04-23}, 
+keywords = {}
+}
+@article{contractbasedmock, 
+year = {2016}, 
+title = {{Contract-Based Mocking for Services-Oriented Development}}, 
+author = {Solms, Fritz and Marshall, Linda}, 
+journal = {Proceedings of the Annual Conference of the South African Institute of Computer Scientists and Information Technologists}, 
+doi = {10.1145/2987491.2987534}, 
+abstract = {{Unit testing of software components requires that a component is tested in isolation. However, many components require the services of other components to provide their functionality. In order to decouple the component being tested from its dependencies, one commonly uses mock objects. Mocking frameworks which are currently used in industry use dynamic mock object generation with the mocking behaviour specified where the mocking is required, e.g. within unit tests. There is no guarantee that the mocking behaviour is consistent with the behaviour required from the component being mocked. Furthermore, these mock objects are not reused across unit tests and other areas where mocking is required. We consider an alternative approach to mocking where the mock object is specified against the contract being mocked and reused across unit tests and other code where mocking is required. These mock objects are tested against the component contracts for the components they are mocking. Furthermore, using dependency injection one is able to reuse the functional tests across unit tests (injecting mock objects for the dependencies) and integration tests (injecting actual components for the dependencies). Even though this approach does require more code to be developed for specifying mocking behaviour, this is offset by the mock object being reused across unit tests for components with the same dependency as well as across integration tests.}}, 
+pages = {40}, 
+keywords = {}
+}
+@article{mazuco2016reportsmock, 
+year = {2016}, 
+title = {{Reports with tdd and mock objects: An improvement in unit tests}}, 
+author = {Mazuco, Alan SC and Canedo, Edna Dias}, 
+journal = {ICSEA 2016}, 
+pages = {72--77}, 
+keywords = {}
+}
+@article{dynamicstubframework, 
+year = {2017}, 
+title = {{A General Framework for Dynamic Stub Injection}}, 
+author = {Christakis, Maria and Emmisberger, Patrick and Godefroid, Patrice and Müller, Peter}, 
+journal = {2017 IEEE/ACM 39th International Conference on Software Engineering (ICSE)}, 
+doi = {10.1109/icse.2017.60}, 
+abstract = {{Stub testing is a standard technique to simulate the behavior of dependencies of an application under test such as the file system. Even though existing frameworks automate the actual stub injection, testers typically have to implement manually where and when to inject stubs, in addition to the stub behavior. This paper presents a novel framework that reduces this effort. The framework provides a domain specific language to describe stub injection strategies and stub behaviors via declarative rules, as well as a tool that automatically injects stubs dynamically into binary code according to these rules. Both the domain specific language and the injection are language independent, which enables the reuse of stubs and injection strategies across applications. We implemented this framework for both unmanaged (assembly) and managed (.NET) code and used it to perform fault injection for twelve large applications, which revealed numerous crashes and bugs in error handling code. We also show how to prioritize the analysis of test failures based on a comparison of the effectiveness of stub injection rules across applications.}}, 
+pages = {586--596}, 
+keywords = {}
+}
+@article{functionalmocking, 
+year = {2017}, 
+title = {{Private API Access and Functional Mocking in Automated Unit Test Generation}}, 
+author = {Arcuri, Andrea and Fraser, Gordon and Just, René}, 
+journal = {2017 IEEE International Conference on Software Testing, Verification and Validation (ICST)}, 
+doi = {10.1109/icst.2017.19}, 
+abstract = {{Not all object oriented code is easily testable: Dependency objects might be difficult or even impossible to instantiate, and object-oriented encapsulation makes testing potentially simple code difficult if it cannot easily be accessed. When this happens, then developers can resort to mock objects that simulate the complex dependencies, or circumvent object-oriented encapsulation and access private APIs directly through the use of, for example, Java reflection. Can automated unit test generation benefit from these techniques as well? In this paper we investigate this question by extending the EvoSuite unit test generation tool with the ability to directly access private APIs and to create mock objects using the popular Mockito framework. However, care needs to be taken that this does not impact the usefulness of the generated tests: For example, a test accessing a private field could later fail if that field is renamed, even if that renaming is part of a semantics-preserving refactoring. Such a failure would not be revealing a true regression bug, but is a false positive, which wastes the developer's time for investigating and fixing the test. Our experiments on the SF110 and Defects4J benchmarks confirm the anticipated improvements in terms of code coverage and bug finding, but also confirm the existence of false positives. However, by ensuring the test generator only uses mocking and reflection if there is no other way to reach some part of the code, their number remains small.}}, 
+pages = {126--137}, 
+keywords = {}
+}
+@article{tomockornot, 
+year = {2017}, 
+title = {{To Mock or Not to Mock? An Empirical Study on Mocking Practices}}, 
+author = {Spadini, Davide and Aniche, Maurício and Bruntink, Magiel and Bacchelli, Alberto}, 
+journal = {2017 IEEE/ACM 14th International Conference on Mining Software Repositories (MSR)}, 
+doi = {10.1109/msr.2017.61}, 
+abstract = {{When writing automated unit tests, developers often deal with software artifacts that have several dependencies. In these cases, one has the possibility of either instantiating the dependencies or using mock objects to simulate the dependencies' expected behavior. Even though recent quantitative studies showed that mock objects are widely used in OSS projects, scientific knowledge is still lacking on how and why practitioners use mocks. Such a knowledge is fundamental to guide further research on this widespread practice and inform the design of tools and processes to improve it. The objective of this paper is to increase our understanding of which test dependencies developers (do not) mock and why, as well as what challenges developers face with this practice. To this aim, we create MOCKEXTRACTOR a tool to mine the usage of mock objects in testing code and employ it to collect data from three OSS projects and one industrial system. Sampling from this data, we manually analyze how more than 2,000 test dependencies are treated. Subsequently, we discuss our findings with developers from these systems, identifying practices, rationales, and challenges. These results are supported by a structured survey with more than 100 professionals. The study reveals that the usage of mocks is highly dependent on the responsibility and the architectural concern of the class. Developers report to frequently mock dependencies that make testing difficult and prefer to not mock classes that encapsulate domain concepts/rules of the system. Among the key challenges, developers report that maintaining the behavior of the mock compatible with the behavior of original class is hard and that mocking increases the coupling between the test and the production code.}}, 
+pages = {402--412}, 
+keywords = {}
+}
+@article{staticmock, 
+year = {2018}, 
+title = {{STATICMOCK : A Mock Object Framework for Compiled Languages}}, 
+author = {Bingham, Dustin and Walcott, Kristen R}, 
+journal = {International Journal of Software Engineering \& Applications}, 
+issn = {0976-2221}, 
+doi = {10.5121/ijsea.2018.9408}, 
+pages = {119--138}, 
+number = {4}, 
+volume = {9}, 
+keywords = {}
+}
+@article{drivergenfortdd, 
+year = {2018}, 
+title = {{Stubs and Drivers Generator for Object-Oriented Program Testing Using Sequence and Class Diagrams}}, 
+author = {Luengruengroj, Peerawut and Suwannasart, Taratip}, 
+journal = {2018 5th International Conference on Computational Science/Intelligence and Applied Informatics (CSII)}, 
+doi = {10.1109/csii.2018.00013}, 
+abstract = {{This paper aims to present a tool named Stubs and Drivers Generation Tool which is a web application for generating stub and driver source code from an UML, sequence diagram and a class diagram. Testers can automate the unit testing with our tool. The tool will read the XML file of a sequence diagram and a class diagram. Next, the tool processes the XML file and create a call graph from the sequence diagram. After a tester selects a class under test and set values of the class under test source code attributes, the tool will create the stub and driver from set attributes. The tester can customize the source code and export the source code file for using in the testing process.}}, 
+pages = {32--36}, 
+keywords = {}
+}
+@misc{whotestcontract, 
+year = {2018}, 
+title = {{Who Tests the Contract Tests?}}, 
+author = {Rainsberger, Joe B}, 
+url = {https://blog.thecodewhisperer.com/permalink/who-tests-the-contract-tests}, 
+urldate = {2023-04-24}, 
+keywords = {}
+}
+@article{mockfortestjava, 
+year = {2019}, 
+title = {{Mock objects for testing java systems}}, 
+author = {Spadini, Davide and Aniche, Maurício and Bruntink, Magiel and Bacchelli, Alberto}, 
+journal = {Empirical Software Engineering}, 
+issn = {1382-3256}, 
+doi = {10.1007/s10664-018-9663-0}, 
+abstract = {{When testing software artifacts that have several dependencies, one has the possibility of either instantiating these dependencies or using mock objects to simulate the dependencies’ expected behavior. Even though recent quantitative studies showed that mock objects are widely used both in open source and proprietary projects, scientific knowledge is still lacking on how and why practitioners use mocks. An empirical understanding of the situations where developers have (and have not) been applying mocks, as well as the impact of such decisions in terms of coupling and software evolution can be used to help practitioners adapt and improve their future usage. To this aim, we study the usage of mock objects in three OSS projects and one industrial system. More specifically, we manually analyze more than 2,000 mock usages. We then discuss our findings with developers from these systems, and identify practices, rationales, and challenges. These results are supported by a structured survey with more than 100 professionals. Finally, we manually analyze how the usage of mock objects in test code evolve over time as well as the impact of their usage on the coupling between test and production code. Our study reveals that the usage of mocks is highly dependent on the responsibility and the architectural concern of the class. Developers report to frequently mock dependencies that make testing difficult (e.g., infrastructure-related dependencies) and to not mock classes that encapsulate domain concepts/rules of the system. Among the key challenges, developers report that maintaining the behavior of the mock compatible with the behavior of original class is hard and that mocking increases the coupling between the test and the production code. Their perceptions are confirmed by our data, as we observed that mocks mostly exist since the very first version of the test class, and that they tend to stay there for its whole lifetime, and that changes in production code often force the test code to also change.}}, 
+pages = {1461--1498}, 
+number = {3}, 
+volume = {24}, 
+keywords = {}
+}
+@article{assessmockclass, 
+year = {2020}, 
+title = {{Assessing Mock Classes: An Empirical Study}}, 
+author = {Pereira, Gustavo and Hora, Andre}, 
+journal = {2020 IEEE International Conference on Software Maintenance and Evolution (ICSME)}, 
+doi = {10.1109/icsme46990.2020.00050}, 
+abstract = {{During testing activities, developers frequently rely on dependencies (e.g., web services, etc) that make the test harder to be implemented. In this scenario, they can use mock objects to emulate the dependencies’ behavior, which contributes to make the test fast and isolated. In practice, the emulated dependency can be dynamically created with the support of mocking frameworks or manually hand-coded in mock classes. While the former is well-explored by the research literature, the latter has not yet been studied. Assessing mock classes would provide the basis to better understand how those mocks are created and consumed by developers and to detect novel practices and challenges. In this paper, we provide the first empirical study to assess mock classes. We analyze 12 popular software projects, detect 604 mock classes, and assess their content, design, and usage. We find that mock classes: often emulate domain objects, external dependencies, and web services; are typically part of a hierarchy; are mostly public, but 1/3 are private; and are largely consumed by client projects, particularly to support web testing. Finally, based on our results, we provide implications and insights to researchers and practitioners working with mock classes.}}, 
+pages = {453--463}, 
+volume = {00}, 
+keywords = {}
+}
+@article{mocksniffer, 
+year = {2020}, 
+title = {{MockSniffer: Characterizing and Recommending Mocking Decisions for Unit Tests}}, 
+author = {Zhu, Hengcheng and Wei, Lili and Wen, Ming and Liu, Yepang and Cheung, Shing-Chi and Sheng, Qin and Zhou, Cui}, 
+journal = {Proceedings of the 35th IEEE/ACM International Conference on Automated Software Engineering}, 
+doi = {10.1145/3324884.3416539}, 
+abstract = {{In unit testing, mocking is popularly used to ease test effort, reduce test flakiness, and increase test coverage by replacing the actual dependencies with simple implementations. However, there are no clear criteria to determine which dependencies in a unit test should be mocked. Inappropriate mocking can have undesirable consequences: under-mocking could result in the inability to isolate the class under test (CUT) from its dependencies while over-mocking increases the developers' burden on maintaining the mocked objects and may lead to spurious test failures. According to existing work, various factors can determine whether a dependency should be mocked. As a result, mocking decisions are often difficult to make in practice. Studies on the evolution of mocked objects also showed that developers tend to change their mocking decisions: 17\% of the studied mocked objects were introduced sometime after the test scripts were created and another 13\% of the originally mocked objects eventually became unmocked. In this work, we are motivated to develop an automated technique to make mocking recommendations to facilitate unit testing. We studied 10,846 test scripts in four actively maintained open-source projects that use mocked objects, aiming to characterize the dependencies that are mocked in unit testing. Based on our observations on mocking practices, we designed and implemented a tool, MockSniffer, to identify and recommend mocks for unit tests. The tool is fully automated and requires only the CUT and its dependencies as input. It leverages machine learning techniques to make mocking recommendations by holistically considering multiple factors that can affect developers' mocking decisions. Our evaluation of MockSniffer on ten open-source projects showed that it outperformed three baseline approaches, and achieved good performance in two potential application scenarios.}}, 
+pages = {436--447}, 
+keywords = {}
+}
+@article{mockusageinapache, 
+year = {2022}, 
+title = {{An Empirical Study on the Usage of Mocking Frameworks in Apache Software Foundation}}, 
+author = {Xiao, Lu and Li, Keye and Lim, Erick and Wang, Xiao and Wei, Chenhao and Yu, Tingting and Wang, Xiaoyin}, 
+journal = {SSRN Electronic Journal}, 
+doi = {10.2139/ssrn.4100265}, 
+keywords = {}
+}
+@article{mimickingmock, 
+year = {2022}, 
+title = {{Mimicking Production Behavior with Generated Mocks}}, 
+author = {Tiwari, Deepika and Monperrus, Martin and Baudry, Benoit}, 
+journal = {arXiv}, 
+doi = {10.48550/arxiv.2208.01321}, 
+eprint = {2208.01321}, 
+abstract = {{Mocking in the context of automated software tests allows testing program units in isolation. Designing realistic interactions between a unit and its environment, and understanding the expected impact of these interactions on the behavior of the unit, are two key challenges that software testers face when developing tests with mocks. In this paper, we propose to monitor an application in production to generate tests that mimic realistic execution scenarios through mocks. Our approach operates in three phases. First, we instrument a set of target methods for which we want to generate tests, as well as the methods that they invoke, which we refer to mockable method calls. Second, in production, we collect data about the context in which target methods are invoked, as well as the parameters and the returned value for each mockable method call. Third, offline, we analyze the production data to generate test cases with realistic inputs and mock interactions. The approach is automated and implemented in an open-source tool called RICK. We evaluate our approach with three real-world, open-source Java applications. RICK monitors the invocation of 128 methods in production across the three applications and captures their behavior. Next, RICK analyzes the production observations in order to generate test cases that include rich initial states and test inputs, mocks and stubs that recreate actual interactions between the method and its environment, as well as mock-based oracles. All the test cases are executable, and 52.4\% of them successfully mimic the complete execution context of the target methods observed in production. We interview 5 developers from the industry who confirm the relevance of using production observations to design mocks and stubs.}}, 
+keywords = {}
+}
+@misc{easymock, 
+title = {{EasyMock}}, 
+author = {Freese, Tammo}, 
+url = {https://easymock.org/}, 
+urldate = {2023-04-24}, 
+keywords = {}
+}
+@misc{mockito, 
+title = {{Mockito}}, 
+author = {Faber, Szczepan}, 
+url = {https://site.mockito.org/}, 
+urldate = {2023-04-24}, 
+keywords = {}
+}
+@misc{tautotest, 
+title = {{TTDD - Tautological Test Driven Development (Anti Pattern)}}, 
+author = {Pereira, Fabio}, 
+url = {https://fabiopereira.me/blog/2010/05/27/ttdd-tautological-test-driven-development-anti-pattern/}, 
+urldate = {2023-04-24}, 
+keywords = {}
+}
+
+
+@inproceedings{doop,
+author = {Bravenboer, Martin and Smaragdakis, Yannis},
+title = {Strictly Declarative Specification of Sophisticated Points-to Analyses},
+year = 2009,
+isbn = 9781605587660,
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1640089.1640108},
+doi = {10.1145/1640089.1640108},
+abstract = {We present the DOOP framework for points-to analysis of Java programs. DOOP builds on the idea of specifying pointer analysis algorithms declaratively, using Datalog: a logic-based language for defining (recursive) relations. We carry the declarative approach further than past work by describing the full end-to-end analysis in Datalog and optimizing aggressively using a novel technique specifically targeting highly recursive Datalog programs.As a result, DOOP achieves several benefits, including full order-of-magnitude improvements in runtime. We compare DOOP with Lhotak and Hendren's PADDLE, which defines the state of the art for context-sensitive analyses. For the exact same logical points-to definitions (and, consequently, identical precision) DOOP is more than 15x faster than PADDLE for a 1-call-site sensitive analysis of the DaCapo benchmarks, with lower but still substantial speedups for other important analyses. Additionally, DOOP scales to very precise analyses that are impossible with PADDLE and Whaley et al.'s bddbddb, directly addressing open problems in past literature. Finally, our implementation is modular and can be easily configured to analyses with a wide range of characteristics, largely due to its declarativeness.},
+booktitle = {Proceedings of the 24th ACM SIGPLAN Conference on Object Oriented Programming Systems Languages and Applications},
+pages = {243–262},
+numpages = 20,
+keywords = {DOOP, points-to analysis, datalog, bdds, declarative},
+location = {Orlando, Florida, USA},
+series = {OOPSLA '09}
+}
